@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
-Route::get('/api/example', function () {
-    $data = [
-        "name" => "asdf1234",
-        "email" => "ads132@gmail.com"
-    ];
-    return response()->json($data);
+Route::get('/', function () {
+    $path = public_path('dist/index.html');
+
+    if (File::exists($path)) {
+        return File::get($path);
+    }
+
+    abort(404, 'React build not found.');
 });
